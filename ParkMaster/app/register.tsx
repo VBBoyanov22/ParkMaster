@@ -40,14 +40,12 @@ export default function RegisterScreen() {
 
     setIsLoading(true);
     try {
-      // Create user with email and password
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         formData.email,
         formData.password
       );
 
-      // Store additional user data in Firestore
       await setDoc(doc(db, 'users', userCredential.user.uid), {
         name: formData.name,
         email: formData.email,
@@ -124,7 +122,7 @@ export default function RegisterScreen() {
             <MaterialCommunityIcons name="car" size={24} color="#666" style={styles.inputIcon} />
             <TextInput
               style={styles.input}
-              placeholder="License Plate (Optional)"
+              placeholder="License Plate"
               value={formData.licensePlate}
               onChangeText={(text) => setFormData({ ...formData, licensePlate: text })}
               autoCapitalize="characters"
