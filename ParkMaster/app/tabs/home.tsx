@@ -31,6 +31,10 @@ export default function HomePage() {
     fetchUserData();
   }, []);
 
+  const handleNavigateToSettings = () => {
+    router.push('/tabs/settings');
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -60,7 +64,7 @@ export default function HomePage() {
             <Text style={styles.actionSubtitle}>Past parkings</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.actionCard}>
+          <TouchableOpacity style={styles.actionCard} onPress={handleNavigateToSettings}>
             <MaterialCommunityIcons name="account" size={32} color="#2196F3" />
             <Text style={styles.actionTitle}>Profile</Text>
             <Text style={styles.actionSubtitle}>Manage account</Text>
