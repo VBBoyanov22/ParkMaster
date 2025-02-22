@@ -157,39 +157,46 @@ export default function SettingsScreen() {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.header}>
-          <Text style={styles.title}>Settings</Text>
+          <View style={styles.headerContent}>
+            <MaterialCommunityIcons name="account-circle" size={80} color="#fff" />
+            <Text style={styles.title}>Profile Settings</Text>
+            <Text style={styles.subtitle}>{userData.email}</Text>
+          </View>
         </View>
 
         <View style={styles.form}>
-          <View style={styles.inputContainer}>
-            <MaterialCommunityIcons name="account" size={24} color="#666" style={styles.inputIcon} />
-            <TextInput
-              style={[styles.input, !isEditing && styles.inputDisabled]}
-              placeholder="Name"
-              value={userData.name}
-              onChangeText={(text) => setUserData({ ...userData, name: text })}
-              editable={isEditing}
-              placeholderTextColor="#666"
-            />
-          </View>
+          <View style={styles.card}>
+            <View style={styles.inputContainer}>
+              <MaterialCommunityIcons name="account" size={24} color="#2196F3" style={styles.inputIcon} />
+              <TextInput
+                style={[styles.input, !isEditing && styles.inputDisabled]}
+                placeholder="Name"
+                value={userData.name}
+                onChangeText={(text) => setUserData({ ...userData, name: text })}
+                editable={isEditing}
+                placeholderTextColor="#666"
+              />
+            </View>
 
-          <View style={styles.inputContainer}>
-            <MaterialCommunityIcons name="email" size={24} color="#666" style={styles.inputIcon} />
-            <TextInput
-              style={[styles.input, styles.inputDisabled]}
-              placeholder="Email"
-              value={userData.email}
-              editable={false}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              placeholderTextColor="#666"
-            />
+            <View style={styles.inputContainer}>
+              <MaterialCommunityIcons name="email" size={24} color="#2196F3" style={styles.inputIcon} />
+              <TextInput
+                style={[styles.input, styles.inputDisabled]}
+                placeholder="Email"
+                value={userData.email}
+                editable={false}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                placeholderTextColor="#666"
+              />
+              <MaterialCommunityIcons name="lock" size={20} color="#666" style={styles.lockIcon} />
+            </View>
           </View>
 
           {isEditing && (
-            <>
+            <View style={[styles.card, styles.securityCard]}>
               <View style={styles.inputContainer}>
-                <MaterialCommunityIcons name="lock" size={24} color="#666" style={styles.inputIcon} />
+                <MaterialCommunityIcons name="lock" size={24} color="#2196F3" style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="Current Password (required for password change)"
@@ -201,7 +208,7 @@ export default function SettingsScreen() {
               </View>
 
               <View style={styles.inputContainer}>
-                <MaterialCommunityIcons name="lock-reset" size={24} color="#666" style={styles.inputIcon} />
+                <MaterialCommunityIcons name="lock-reset" size={24} color="#2196F3" style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="New Password (optional)"
@@ -211,29 +218,40 @@ export default function SettingsScreen() {
                   placeholderTextColor="#666"
                 />
               </View>
-            </>
+            </View>
           )}
 
-          <TouchableOpacity
-            style={[styles.button, isEditing && styles.saveButton]}
-            onPress={handleUpdateProfile}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <ActivityIndicator color="#fff" />
-            ) : (
-              <Text style={styles.buttonText}>
-                {isEditing ? 'Save Changes' : 'Edit Profile'}
-              </Text>
-            )}
-          </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={[styles.button, isEditing ? styles.saveButton : styles.editButton]}
+              onPress={handleUpdateProfile}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <>
+                  <MaterialCommunityIcons 
+                    name={isEditing ? "content-save" : "account-edit"} 
+                    size={24} 
+                    color="#fff" 
+                    style={styles.buttonIcon} 
+                  />
+                  <Text style={styles.buttonText}>
+                    {isEditing ? 'Save Changes' : 'Edit Profile'}
+                  </Text>
+                </>
+              )}
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={[styles.button, styles.signOutButton]}
-            onPress={handleSignOut}
-          >
-            <Text style={styles.buttonText}>Sign Out</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, styles.signOutButton]}
+              onPress={handleSignOut}
+            >
+              <MaterialCommunityIcons name="logout" size={24} color="#fff" style={styles.buttonIcon} />
+              <Text style={styles.buttonText}>Sign Out</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -243,36 +261,79 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
   },
   scrollContainer: {
     flexGrow: 1,
   },
   header: {
     backgroundColor: '#2196F3',
-    padding: 20,
-    paddingTop: 40,
+    paddingTop: 20,
+    paddingBottom: 20,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  headerContent: {
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
+    marginTop: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#fff',
+    opacity: 0.8,
+    marginTop: 4,
   },
   form: {
-    padding: 20,
+    padding: 16,
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 15,
+    padding: 12,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 3,
+  },
+  securityCard: {
+    marginTop: 0,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f8f8f8',
     borderRadius: 12,
-    marginBottom: 16,
+    marginBottom: 12,
     paddingHorizontal: 16,
-    height: 56,
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#eee',
   },
   inputIcon: {
     marginRight: 12,
+  },
+  lockIcon: {
+    marginLeft: 8,
+    opacity: 0.6,
   },
   input: {
     flex: 1,
@@ -281,14 +342,19 @@ const styles = StyleSheet.create({
   },
   inputDisabled: {
     opacity: 0.7,
+    backgroundColor: '#f0f0f0',
+  },
+  buttonContainer: {
+    marginTop: 8,
+    gap: 12,
   },
   button: {
+    flexDirection: 'row',
     backgroundColor: '#2196F3',
     borderRadius: 12,
-    height: 56,
+    height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 24,
     shadowColor: '#2196F3',
     shadowOffset: {
       width: 0,
@@ -298,6 +364,12 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 4,
   },
+  buttonIcon: {
+    marginRight: 8,
+  },
+  editButton: {
+    backgroundColor: '#2196F3',
+  },
   saveButton: {
     backgroundColor: '#4CAF50',
   },
@@ -306,7 +378,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
   },
 });
