@@ -1,4 +1,4 @@
-import { Tabs } from 'expo-router';
+import { Tabs, Stack } from 'expo-router';
 
 export default function TabLayout() {
   return (
@@ -7,6 +7,10 @@ export default function TabLayout() {
       tabBarStyle: { display: 'none' }
     }}>
       <Tabs.Screen name="home" />
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="login" />
+      <Stack.Screen name="register" />
+      <Stack.Screen name="parkMap" />
     </Tabs>
   );
 }

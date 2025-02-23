@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import { auth, db } from './config/firebase';
+import { auth, db } from '../config/firebase';
 
 export default function RegisterScreen() {
   const [formData, setFormData] = useState({
@@ -57,7 +57,7 @@ export default function RegisterScreen() {
       Alert.alert(
         'Success',
         'Account created successfully!',
-        [{ text: 'OK', onPress: () => router.replace('/login') }]
+        [{ text: 'OK', onPress: () => router.replace('./login') }]
       );
     } catch (error: any) {
       let errorMessage = 'Registration failed. Please try again.';
@@ -164,7 +164,7 @@ export default function RegisterScreen() {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.loginButton} onPress={() => router.push('/login')}>
+          <TouchableOpacity style={styles.loginButton} onPress={() => router.push('./login')}>
             <Text style={styles.loginText}>Already have an account? Login</Text>
           </TouchableOpacity>
         </View>

@@ -13,7 +13,7 @@ export default function HomePage() {
     async function fetchUserData() {
       const user = auth.currentUser;
       if (!user) {
-        router.replace('/login');
+        router.replace('./login');
         return;
       }
 
@@ -46,7 +46,7 @@ export default function HomePage() {
 
       <View style={styles.content}>
         <View style={styles.quickActions}>
-          <TouchableOpacity style={styles.actionCard}>
+          <TouchableOpacity style={styles.actionCard} onPress={() => router.push('./parkMap')}>
             <MaterialCommunityIcons name="car-parking-lights" size={32} color="#2196F3" />
             <Text style={styles.actionTitle}>Find Parking</Text>
             <Text style={styles.actionSubtitle}>Locate available spots</Text>

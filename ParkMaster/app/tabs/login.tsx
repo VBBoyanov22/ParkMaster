@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './config/firebase';
+import { auth } from '../config/firebase';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -88,7 +88,7 @@ export default function LoginScreen() {
 
           <TouchableOpacity 
             style={styles.registerButton} 
-            onPress={() => router.push('/register')}
+            onPress={() => router.push('./register')}
           >
             <Text style={styles.registerText}>
               Don't have an account? <Text style={styles.registerTextBold}>Sign Up</Text>
